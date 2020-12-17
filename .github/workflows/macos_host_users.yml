@@ -2,6 +2,7 @@ name: Mac OSX host system
 
 on:
   push:
+  pull_request:
 
 jobs:
 
