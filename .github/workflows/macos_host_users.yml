@@ -1,10 +1,30 @@
-name: Mac OSX host system
+name: Host system builder
 
 on:
   push:
-  pull_request:
 
 jobs:
+
+linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.9.x'
+    - run: apt-get install ccache cppcheck g++-10
+    - run: pip install meson ninja scan-build
+    - run: scan-build meson setup builddir
+      env:
+        CXX: g++-10
+    - run: cppcheck --project=build/compile_commands.json
+    - run: scan-build meson test -C builddir -v
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Linux_Meson_Testlog
+        path: build/meson-logs/testlog.txt
+
   macos:
     runs-on: macos-latest
     steps:
@@ -15,8 +35,10 @@ jobs:
     - run: pip install meson ninja
     - run: brew install ccache cppcheck
     - run: meson setup build -Dwith_tests=enabled
+      env:
+        CXX: ccache g++-10
     - run: cppcheck --project=build/compile_commands.json
-    - run: meson test -C build -v
+    - run: scan-build meson test -C build -v
 
     - uses: actions/upload-artifact@v2
       if: failure()
