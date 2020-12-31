@@ -58,6 +58,7 @@ jobs:
         cppcheck --project=build/compile_commands.json &&
         meson test -C build -v
       working-directory: .
+ 
   debian_linux:
     runs-on: ubuntu-latest
     container:
@@ -69,6 +70,7 @@ jobs:
         cppcheck --project=build/compile_commands.json &&
         meson test -C build -v
       working-directory: .
+
   fedora_linux:
     runs-on: ubuntu-latest
     container:
@@ -80,6 +82,7 @@ jobs:
         cppcheck --project=build/compile_commands.json &&
         meson test -C build -v
       working-directory: .
+
   arch_linux:
     runs-on: ubuntu-latest
     container:
@@ -91,6 +94,7 @@ jobs:
         cppcheck --project=build/compile_commands.json &&
         meson test -C build -v
       working-directory: .
+
   opensuse_linux:
     runs-on: ubuntu-latest
     container:
