@@ -35,10 +35,16 @@ jobs:
     - uses: actions/setup-python@v1
       with:
         python-version: '3.x'
+        
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: ccache g++-10
+
     - run: pip install meson ninja
     - run: meson setup build
       env:
-        CXX: g++-10
+        CXX: ccache g++-10
     - run: meson test -C build -v
     - uses: actions/upload-artifact@v1
       if: failure()
