@@ -42,7 +42,7 @@ jobs:
         install: ccache
 
     - run: pip install meson ninja
-    - run: meson setup build
+    - run: meson setup build -Dwith_tests=enabled
       env:
         CXX: ccache g++
     - run: meson test -C build -v
