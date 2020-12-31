@@ -39,12 +39,12 @@ jobs:
     - uses: msys2/setup-msys2@v2
       with:
         update: true
-        install: ccache g++-10
+        install: ccache g++
 
     - run: pip install meson ninja
     - run: meson setup build
       env:
-        CXX: ccache g++-10
+        CXX: ccache g++
     - run: meson test -C build -v
     - uses: actions/upload-artifact@v1
       if: failure()
